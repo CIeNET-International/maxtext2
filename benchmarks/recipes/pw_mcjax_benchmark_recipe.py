@@ -49,7 +49,8 @@ if __name__ == "__main__":
       sys.exit(0)
 
     print(f"configuration used：{user_config}")
-    main(user_config)
+    return_code = main(user_config)
+    sys.exit(return_code)
 
   else: # len(sys.argv) == 1
     print("No command line or only a single --delete argument was detected. The default configuration will be used.")
@@ -65,4 +66,5 @@ if __name__ == "__main__":
       if not should_continue:
         sys.exit(0)    
     print(f"configuration used：{user_config}")
-    main(user_config)
+    return_code= main(user_config)
+    sys.exit(return_code)
