@@ -1,5 +1,13 @@
 import argparse
 
+def parse_int_list(arg):
+  """Parses a string with comma-separated values into a list of integers."""
+  return [int(x) for x in arg.split(',')]
+
+def parse_str_list(arg):
+  """Parses a string with space-separated values into a list of strings."""
+  return [s.strip() for s in arg.split(',')]
+
 def add_arguments(parser: argparse.ArgumentParser):
   """Add arguments to arg parsers that need it.
 
@@ -90,18 +98,17 @@ def add_arguments(parser: argparse.ArgumentParser):
       help='Run in headless mode.')
   parser.add_argument(
       '--selected_model_framework',
-      nargs='+',
+      type=parse_str_list,
       default=['pathways'],
-      help='List of model frameworks (e.g., pathways mcjax).')
+      help='List of model frameworks (e.g., pathways, mcjax')
   parser.add_argument(
       '--selected_model_names',
-      nargs='+',
-      default=['llama3_1_8b_8192'],
-      help='List of model names (e.g., llama3_1_8b_8192_v5e_256).')
+      type=parse_str_list,
+      default=['llama3_1_8b_8192_v5e_256'],
+      help='List of model names (e.g., llama3_1_8b_8192_v5e_256, llama2-7b-v5e-256')
   parser.add_argument(
       '--num_slices_list',
-      nargs='+',
-      type=int,
+      type=parse_int_list,
       default=[2],
       help='List of number of slices.')
 
@@ -111,14 +118,12 @@ def add_arguments(parser: argparse.ArgumentParser):
       type=str,
       default='~/xpk',
       help='Path to xpk.')
-
-# def main():
-#     parser = argparse.ArgumentParser(description="Main script description.")
-#     add_arguments(parser)
-#     args = parser.parse_args()
-#     print(f"User: {args.user}")
-#     print(f"Cluster Name: {args.cluster_name}")
-#     print(f"Selected Model Names: {args.selected_model_names}")
-
-# if __name__ == '__main__':
-#     main()
+  parser.add_argument(
+      '--delete',
+      action='store_true',
+      help='Delete the cluster workload')
+  parser.add_argument(
+      '--max_restarts',
+      type=int,
+      default=0,
+      help='Maximum number of restarts')
