@@ -577,6 +577,7 @@ def generate_xpk_workload_cmd(
     cluster_config: XpkClusterConfig,
     wl_config: WorkloadConfig,
     workload_name=None,
+    user=os.environ['USER'],
     exp_name=None,
 ):
   """Generates a command to run a maxtext model on XPK."""
@@ -593,7 +594,8 @@ def generate_xpk_workload_cmd(
   truncate_model_name = 10
   truncate_prefix = 3
   post_fix = f"-{wl_config.num_slices}-{time.strftime('%m%d%H', time.localtime())}-{temp_post_fix}"
-  common_prefix = os.environ['USER']
+  common_prefix = user
+
   pw_prefix = "pw-"
 
   if workload_name is None: # Generate name if not provided
