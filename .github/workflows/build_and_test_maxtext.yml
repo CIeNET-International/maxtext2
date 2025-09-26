@@ -19,9 +19,6 @@ name: MaxText Package Tests
 on:
   pull_request:
   workflow_dispatch:
-  schedule:
-    # Run the job every 4 hours
-    - cron:  '0 */4 * * *'
 
 concurrency:
   # Dedup pull requests (canceling previous runs of the same workflow for same PR), and scheduled runs but nothing else
